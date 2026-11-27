@@ -44,7 +44,7 @@ data/Gibson_Floorplan_Localization_Dataset/
 
 To use the wall annotations from our evaluations, download `freeloc_gibson_wall_lines.zip` from the [FreeLoc Google Drive folder](https://drive.google.com/drive/folders/1HDMKszl7O6DpQem_PzYML_qB7WdxpI4y) and extract it into the Gibson dataset root.
 
-Keep the original splits, maps, poses, and RGB images. You can also generate any missing wall annotations from the repository root with the command below.
+You can also generate any missing wall annotations from the repository root with the command below.
 
 ```bash
 python tools/extract_wall_lines.py --data_root data/Gibson_Floorplan_Localization_Dataset
@@ -83,7 +83,7 @@ Both scripts evaluate the respective `test` split and save metrics and predictio
 
 Set `depth_checkpoint` to the pretrained depth weights for your config. See the upstream [F3Loc monocular depth](https://github.com/felix-ch/f3loc#download-checkpoints) and [UnLoc Gibson ViT-L](https://github.com/matthias-wueest/UnLoc#unloc-checkpoints) checkpoints. The UnLoc + DA config also needs [Depth Anything V2 Metric Hypersim ViT-L](https://huggingface.co/depth-anything/Depth-Anything-V2-Metric-Hypersim-Large) at `depth_anything_checkpoint`.
 
-Although the paper's diffusion-aided pose refiner is trained only on F3Loc depth predictions, using UnLoc as a drop-in depth estimator at inference further improves localization accuracy without retraining.
+**Note.** You can train the refiner on UnLoc depth predictions using the corresponding config, but UnLoc also works as a drop-in depth estimator at inference. In our experiments, the refiner was trained exclusively on FreeLoc depth predictions. Simply switching to UnLoc depth predictions at inference further improved localization accuracy without retraining the refiner.
 
 ```bash
 python train_diffusion_loc_from_depth.py --cfg_path "$CFG"
