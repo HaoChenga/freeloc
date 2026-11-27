@@ -1,12 +1,12 @@
 # FreeLoc: Online Floorplan Localization via Diffusion-Aided Pose Refinement
 
-Haocheng Peng · Boyang Zhou · Jiarui Hu · Xiyue Guo · Ziyang Zhang · Boming Zhao · Yifan Gao · Xiao Li · Hujun Bao · Zhaopeng Cui
+[Haocheng Peng](https://github.com/HaoChenga) · [Boyang Zhou](https://github.com/AugetyVolta) · [Jiarui Hu](https://scholar.google.com/citations?hl=zh-CN&user=0CJPK3IAAAAJ) · [Xiyue Guo](https://scholar.google.com/citations?hl=en&user=P8ewTVYAAAAJ) · [Ziyang Zhang](https://github.com/AwsSleepy) · [Boming Zhao](https://bomingzhao.github.io/) · [Yifan Gao](https://github.com/yifan-gao-dev) · Xiao Li · [Hujun Bao](https://openreview.net/profile?id=~Hujun_Bao1) · [Zhaopeng Cui](https://zhpcui.github.io/)
 
 **CoRL 2026** · State Key Lab of CAD&CG, Zhejiang University
 
 [Paper](https://arxiv.org/abs/2610.05011) · [Project Page](https://zju3dv.github.io/freeloc/) · [Citation](#citation)
 
-FreeLoc estimates the camera pose from a gravity-aligned RGB image and a 2D floor plan. It uses GPU ray casting to find coarse pose anchors, refines them with diffusion, and reranks the candidates by ray consistency.
+FreeLoc enables accurate, real-time RGB-based localization directly from 2D floorplans, without scene-specific offline ray databases.
 
 ## Setup
 
@@ -21,11 +21,11 @@ python -m pip install torch==2.5.1 torchvision==0.20.1 --index-url https://downl
 python -m pip install -r requirements.txt
 ```
 
-The reference UnLoc + DA run also used xFormers 0.0.29 with a matching PyTorch/CUDA build. See the [third-party notices](THIRD_PARTY_NOTICES.md) for upstream components.
+The reference UnLoc + DA run also used xFormers 0.0.29 with a matching PyTorch/CUDA build. See the [UnLoc repository](https://github.com/matthias-wueest/UnLoc) for the upstream implementation.
 
 ### FreeLoc Checkpoints
 
-FreeLoc checkpoints are not included in the source package. Use a matching Lightning checkpoint for evaluation. The table shows suggested local paths.
+Download the [FreeLoc checkpoints from Google Drive](https://drive.google.com/drive/folders/1HDMKszl7O6DpQem_PzYML_qB7WdxpI4y) and place them in `weights/`. Use the matching YAML for evaluation.
 
 | Depth encoder | Config | FreeLoc checkpoint |
 | --- | --- | --- |
@@ -42,7 +42,7 @@ data/Gibson_Floorplan_Localization_Dataset/
 └── gibson_t/    # sequential evaluation
 ```
 
-Keep the original splits, maps, poses, and RGB images. FreeLoc also needs `lines.txt` next to each `map.png`, with one wall segment per row as `x1 y1 x2 y2` in map pixels. These annotations are not bundled. **Neither evaluation mode requires precomputed DESDF files.**
+Keep the original splits, maps, poses, and RGB images. FreeLoc also needs `lines.txt` next to each `map.png`, with one wall segment per row as `x1 y1 x2 y2` in map pixels.
 
 ## Usage
 
@@ -61,11 +61,11 @@ CKPT=weights/freeloc_f3loc_depth.ckpt
 
 ```bash
 # Single-frame localization
-python eval_observation_diffusion_loc_from_depth.py \
+python eval_single_frame.py \
   --cfg_path "$CFG" --ckpt_path "$CKPT" --fix_seed
 
 # Sequential localization
-python eval_filtering_diffusion_from_depth_for_real_deployment_fixed.py \
+python eval_sequential.py \
   --cfg_path "$CFG" --ckpt_path "$CKPT" --traj_len 100 --num_loc 2000 --fix_seed
 ```
 
@@ -75,7 +75,7 @@ Both scripts evaluate the respective `test` split and save metrics and predictio
 
 Set `depth_checkpoint` to the pretrained depth weights for your config. See the upstream [F3Loc monocular depth](https://github.com/felix-ch/f3loc#download-checkpoints) and [UnLoc Gibson ViT-L](https://github.com/matthias-wueest/UnLoc#unloc-checkpoints) checkpoints. The UnLoc + DA config also needs [Depth Anything V2 Metric Hypersim ViT-L](https://huggingface.co/depth-anything/Depth-Anything-V2-Metric-Hypersim-Large) at `depth_anything_checkpoint`.
 
-Although the pose refiner in the paper is trained only on F3Loc depth predictions, FreeLoc achieves strong localization accuracy with UnLoc as a drop-in depth estimator at inference, without retraining.
+Although the paper's diffusion-aided pose refiner is trained only on F3Loc depth predictions, using UnLoc as a drop-in depth estimator at inference further improves localization accuracy without retraining.
 
 ```bash
 python train_diffusion_loc_from_depth.py --cfg_path "$CFG"
