@@ -1,0 +1,7 @@
+# Install the matching PyTorch and torchvision wheel pair first (see README).
+numpy==2.1.2
+opencv-python-headless==4.12.0.88
+PyYAML==6.0.2
+tqdm==4.67.1
+lightning==2.5.5
+omegaconf==2.3.0
