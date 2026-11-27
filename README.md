@@ -6,7 +6,7 @@
 
 [Paper](https://arxiv.org/abs/2610.05011) · [Project Page](https://zju3dv.github.io/freeloc/) · [Citation](#citation)
 
-FreeLoc enables accurate, real-time RGB-based localization directly from 2D floorplans, without scene-specific offline ray databases.
+**FreeLoc enables accurate, real-time RGB-based localization directly from 2D floorplans, without scene-specific offline ray databases.**
 
 ## Setup
 
@@ -83,7 +83,7 @@ Both scripts evaluate the respective `test` split and save metrics and predictio
 
 Set `depth_checkpoint` to the pretrained depth weights for your config. See the upstream [F3Loc monocular depth](https://github.com/felix-ch/f3loc#download-checkpoints) and [UnLoc Gibson ViT-L](https://github.com/matthias-wueest/UnLoc#unloc-checkpoints) checkpoints. The UnLoc + DA config also needs [Depth Anything V2 Metric Hypersim ViT-L](https://huggingface.co/depth-anything/Depth-Anything-V2-Metric-Hypersim-Large) at `depth_anything_checkpoint`.
 
-**Note.** You can train the refiner on UnLoc depth predictions using the corresponding config, but UnLoc also works as a drop-in depth estimator at inference. In our experiments, the refiner was trained exclusively on FreeLoc depth predictions. Simply switching to UnLoc depth predictions at inference further improved localization accuracy without retraining the refiner.
+**Note.** You can train the refiner on UnLoc depth predictions using the corresponding config, but our refiner is plug-and-play across depth estimators. In our experiments, the refiner was trained exclusively on FreeLoc depth predictions. Switching to UnLoc depth predictions at inference further improved localization accuracy without retraining the refiner.
 
 ```bash
 python train_diffusion_loc_from_depth.py --cfg_path "$CFG"
