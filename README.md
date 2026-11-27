@@ -42,7 +42,15 @@ data/Gibson_Floorplan_Localization_Dataset/
 └── gibson_t/    # sequential evaluation
 ```
 
-Keep the original splits, maps, poses, and RGB images. FreeLoc also needs `lines.txt` next to each `map.png`, with one wall segment per row as `x1 y1 x2 y2` in map pixels.
+To use the wall annotations from our evaluations, download `freeloc_gibson_wall_lines.zip` from the [FreeLoc Google Drive folder](https://drive.google.com/drive/folders/1HDMKszl7O6DpQem_PzYML_qB7WdxpI4y) and extract it into the Gibson dataset root.
+
+Keep the original splits, maps, poses, and RGB images. You can also generate any missing wall annotations from the repository root with the command below.
+
+```bash
+python tools/extract_wall_lines.py --data_root data/Gibson_Floorplan_Localization_Dataset
+```
+
+The script writes `lines.txt` next to each `map.png`, with one wall segment per row as `x1 y1 x2 y2` in map pixels. Matching Gibson-t scenes reuse the Gibson-f annotations. 
 
 ## Usage
 
@@ -84,7 +92,7 @@ python train_diffusion_loc_from_depth.py --cfg_path "$CFG"
 ## Citation
 
 ```bibtex
-@misc{peng2026freeloconlinefloorplanlocalization,
+@misc{freeloc,
   title         = {{FreeLoc}: Online Floorplan Localization via Diffusion-Aided Pose Refinement},
   author        = {Peng, Haocheng and Zhou, Boyang and Hu, Jiarui and Guo, Xiyue
                    and Zhang, Ziyang and Zhao, Boming and Gao, Yifan and Li, Xiao

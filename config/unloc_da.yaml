@@ -1,0 +1,48 @@
+# The clean-release evaluation checkpoint contains both depth components.
+data_root: ../data/Gibson_Floorplan_Localization_Dataset
+pose_scale: ../assets/pose_scale.txt
+depth_checkpoint: ../weights/unloc_gibson_vitl.ckpt
+depth_anything_checkpoint: ../weights/depth_anything_v2_metric_hypersim_vitl.pth
+training:
+  output_dir: ../runs/unloc_da
+  batch_size: 64
+  max_epochs: 200
+  lr: 0.001
+  workers: 8
+  seed: 42
+
+BASIC:
+  _obs_encoding_size: 128
+
+DEPTH_CONDITION_EXTRACTOR:
+  _target_: modules.diffusion.condt_feature_extractor.CondtGeomFeatureExtractorFpDiscrete
+  img_encoder:
+    _target_: modules.unloc.depth_net.UnLocDepthNet
+  obs_encoding_size: ${BASIC._obs_encoding_size}
+  interval_rot: 15
+  loc_num: 1000
+  eval_loc_num: 2000
+  use_top_k_for_condt: 10
+
+DENOISER:
+  _target_: modules.diffusion.DenoiserGeomCorrPoseTop1
+  d_model: 256
+  nhead: 4
+  num_layers: 2  # Actual point-Transformer depth in existing clean checkpoints.
+  target_dim: 4
+  K: ${DEPTH_CONDITION_EXTRACTOR.use_top_k_for_condt}
+  hidden_dims: [512, 256, 128]
+  dropout: 0.1
+  temperature: 0.3
+
+DIFFUSER:
+  _target_: modules.diffusion.gaussian_diffuser.GaussianDiffusion_for_multi_anchor
+  beta_schedule: custom
+  topk: ${DEPTH_CONDITION_EXTRACTOR.use_top_k_for_condt}
+  objective: pred_x0
+  timesteps: 100
+  sampling_timesteps: 10
+  beta_1: 0.0001
+  beta_T: 0.1
+  loss_type: l1
+  use_t_sampling_probs: false
