@@ -2,7 +2,7 @@
 
 [Haocheng Peng](https://github.com/HaoChenga) · [Boyang Zhou](https://github.com/AugetyVolta) · [Jiarui Hu](https://scholar.google.com/citations?hl=zh-CN&user=0CJPK3IAAAAJ) · [Xiyue Guo](https://scholar.google.com/citations?hl=en&user=P8ewTVYAAAAJ) · [Ziyang Zhang](https://github.com/AwsSleepy) · [Boming Zhao](https://bomingzhao.github.io/) · [Yifan Gao](https://github.com/yifan-gao-dev) · Xiao Li · [Hujun Bao](https://openreview.net/profile?id=~Hujun_Bao1) · [Zhaopeng Cui](https://zhpcui.github.io/)
 
-**CoRL 2026** · State Key Lab of CAD&CG, Zhejiang University
+CoRL 2026 · State Key Lab of CAD&CG, Zhejiang University
 
 [Paper](https://arxiv.org/abs/2610.05011) · [Project Page](https://zju3dv.github.io/freeloc/) · [Citation](#citation)
 
