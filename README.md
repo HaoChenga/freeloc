@@ -1,6 +1,6 @@
 # FreeLoc: Online Floorplan Localization via Diffusion-Aided Pose Refinement
 
-[Haocheng Peng](https://github.com/HaoChenga) · [Boyang Zhou](https://github.com/AugetyVolta) · [Jiarui Hu](https://scholar.google.com/citations?hl=zh-CN&user=0CJPK3IAAAAJ) · [Xiyue Guo](https://scholar.google.com/citations?hl=en&user=P8ewTVYAAAAJ) · [Ziyang Zhang](https://github.com/AwsSleepy) · [Boming Zhao](https://bomingzhao.github.io/) · [Yifan Gao](https://github.com/yifan-gao-dev) · Xiao Li · [Hujun Bao](https://openreview.net/profile?id=~Hujun_Bao1) · [Zhaopeng Cui](https://zhpcui.github.io/)
+[Haocheng Peng](https://haochenga.github.io/) · [Boyang Zhou](https://github.com/AugetyVolta) · [Jiarui Hu](https://scholar.google.com/citations?hl=zh-CN&user=0CJPK3IAAAAJ) · [Xiyue Guo](https://scholar.google.com/citations?hl=en&user=P8ewTVYAAAAJ) · [Ziyang Zhang](https://github.com/AwsSleepy) · [Boming Zhao](https://bomingzhao.github.io/) · [Yifan Gao](https://github.com/yifan-gao-dev) · Xiao Li · [Hujun Bao](https://openreview.net/profile?id=~Hujun_Bao1) · [Zhaopeng Cui](https://zhpcui.github.io/)
 
 State Key Lab of CAD&CG, Zhejiang University
 
